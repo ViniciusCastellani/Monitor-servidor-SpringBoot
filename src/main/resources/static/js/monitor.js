@@ -74,7 +74,7 @@ function incluirMonitor() {
             body: JSON.stringify(monitor)
         })
         .then(res => res.json())
-        .then(res =>  alert("Inserido com id" + res.id))
+        .then(res =>  alert("Inserido com id: " + res.id))
         .catch(err => alert("Erro ao inserir no servidor" + err.message))
 }
 

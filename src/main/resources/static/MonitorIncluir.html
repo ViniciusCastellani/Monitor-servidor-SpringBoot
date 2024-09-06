@@ -17,7 +17,12 @@
 <h1>Novo Monitor</h1>
 
 Nome:<input id="nome" type="text" value=""><br>
-Tipo:<input id="tipo" type="text" value=""><br>
+Tipo:<select id="tipo">
+  <option value="OLED">OLED</option>
+  <option value="IPS">IPS</option>
+  <option value="VA">VA</option>
+  <option value="TN">TN</option>
+</select><br>
 Tamanho:<input id="tamanho" type="number" value=""><br>
 Preço:<input id="preco" type="number" value=""><br>
 <button onclick="incluirMonitor()">Cadastrar</button>
