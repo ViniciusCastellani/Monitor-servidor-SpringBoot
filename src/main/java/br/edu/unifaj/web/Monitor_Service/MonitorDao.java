@@ -1,6 +1,7 @@
 package br.edu.unifaj.web.Monitor_Service;
 
 import lombok.Data;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 @Data
+@Repository
 public class MonitorDao {
 
     Map<Integer, Monitor> servico = new TreeMap<>();

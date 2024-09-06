@@ -1,20 +1,14 @@
 /** JavaScripts utilizados */
 function buscarMonitores() {
-	//Através de AJAX será montada uma tabela com os Instrumentos.
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			var resp = JSON.parse(this.responseText);
-			if (resp.status != 'OK') {
-				alert(resp.mensagemErro);
-				return;
-			}
-			atualizarTabela(resp.object);
-		}
-	};
-	xhttp.open("GET", "/api/monitor", true);
-	xhttp.send();
+    fetch("http://localhost:8081/api/monitor", {
+       method: "GET"
+    })
+        .then(res => res.json())
+        .then(res => atualizarTabela(res))
+        .catch(err => alert(err.message))
 }
+
+
 
 function atualizarTabela(monitorList) {
 	var tabela = "<table>";
@@ -46,20 +40,12 @@ function buscarMonitor() {
 		return;
 	}
 
-	//Através de AJAX será monstada a tela.
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			var resp = JSON.parse(this.responseText);
-			if (resp.status != 'OK') {
-				alert(resp.mensagemErro);
-				return;
-			}
-			exibirMonitor(resp.object);
-		}
-	};
-	xhttp.open("GET", "api/monitor/" + id, true);
-	xhttp.send();
+	fetch("http://localhost:8081/api/monitor/" + id, {
+	    method: "GET",
+	})
+        .then(res => res.json())
+        .then(res => exibirMonitor(res))
+        .catch(err => alert(err.message))
 }
 
 function exibirMonitor(monitor) {
@@ -68,9 +54,7 @@ function exibirMonitor(monitor) {
 	document.getElementById("tipo").value = monitor.tipo;
 	document.getElementById("tamanho").value = monitor.tamanho;
 	document.getElementById("preco").value = monitor.preco;
-
 }
-
 
 function incluirMonitor() {
 	var monitor = {
@@ -83,12 +67,11 @@ function incluirMonitor() {
 	let headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            mode: 'no-cors'
         };
-        fetch("api/monitor", {
+        fetch("http://localhost:8081/api/monitor", {
             headers: headers,
             method: "POST",
-            body: JSON.stringify(equipe)
+            body: JSON.stringify(monitor)
         })
         .then(res => res.json())
         .then(res =>  alert("Inserido com id" + res.id))
@@ -97,13 +80,10 @@ function incluirMonitor() {
 
 
 function excluirMonitor(id) {
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			//Voltar a página inicial.
-			window.location.replace("MonitorListar.html");
-		}
-	};
-	xhttp.open("DELETE", "api/monitor/" + id, true);
-	xhttp.send();
+	fetch("http://localhost:8081/api/monitor/" + id,{
+        method: "DELETE",
+	})
+        .then(res => res.text())
+        .then(res => window.location.replace("MonitorListar.html"))
+        .catch(err => alert(err.message))
 }
