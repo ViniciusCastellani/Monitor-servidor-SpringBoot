@@ -1,0 +1,18 @@
+CREATE TABLE MONITOR(  ID_MONITOR  INT           AUTO_INCREMENT,
+                       NOME        VARCHAR(50)   NOT NULL,
+                       TIPO        VARCHAR(50)   NOT NULL,
+                       TAMANHO     NUMBER        NOT NULL,
+                       PRECO       NUMBER        NOT NULL
+                    );
+
+
+ALTER TABLE MONITOR
+       ADD CONSTRAINT PK_MONITOR PRIMARY KEY(ID_MONITOR);
+
+
+ALTER TABLE MONITOR
+       ADD CONSTRAINT CK_PRECO_MONITOR CHECK (PRECO > 0);
+
+
+ALTER TABLE MONITOR
+       ADD CONSTRAINT CK_TAMANHO_MONITOR CHECK(TAMANHO > 0);
