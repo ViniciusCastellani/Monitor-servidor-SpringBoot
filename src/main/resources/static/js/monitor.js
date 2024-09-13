@@ -21,6 +21,7 @@ function atualizarTabela(monitorList) {
 					   "<td>" + monitor.tamanho + "</td>" +
 					   "<td>" + monitor.preco + "</td>" +
 				       '<td><a href="MonitorVisualizar.html?id='+ monitor.id + '">Detalhes</a></td>' +
+				       '<td><a href="MonitorAlterar.html?id='+ monitor.id + '">Alterar</a></td>'
 			           '<td><button onclick="excluirMonitor(' + monitor.id + ')">Excluir</button></td>' +
 					"<tr>";
 
@@ -56,6 +57,7 @@ function exibirMonitor(monitor) {
 	document.getElementById("preco").value = monitor.preco;
 }
 
+
 function incluirMonitor() {
 	var monitor = {
 	    nome: nome.value,
@@ -79,6 +81,30 @@ function incluirMonitor() {
 }
 
 
+function alterarMonitor() {
+	var monitor = {
+	    id: id.value,
+	    nome: nome.value,
+	    tipo: tipo.value,
+	    tamanho: tamanho.value,
+	    preco: preco.value
+	};
+
+	let headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        };
+        fetch("http://localhost:8081/api/monitor", {
+            headers: headers,
+            method: "PUT",
+            body: JSON.stringify(monitor)
+        })
+        .then(res => res.json())
+        .then(res =>  alert("Monitor alterado"))
+        .catch(err => alert("Erro ao inserir no servidor" + err.message))
+}
+
+
 function excluirMonitor(id) {
 	fetch("http://localhost:8081/api/monitor/" + id,{
         method: "DELETE",
@@ -87,3 +113,4 @@ function excluirMonitor(id) {
         .then(res => window.location.replace("MonitorListar.html"))
         .catch(err => alert(err.message))
 }
+
